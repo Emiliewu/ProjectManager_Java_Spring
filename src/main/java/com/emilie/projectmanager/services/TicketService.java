@@ -44,12 +44,11 @@ public class TicketService {
 	}
 	// create
 	public Ticket createNewTicket(Ticket t, Long projectId, Long userId) {
-		Ticket newticket = ticketRepo.save(t);
-		Project p= projectRepo.findById(projectId).get();
 		User u = userRepo.findById(userId).get();
-		newticket.setTicketowner(u);
-		newticket.setProject(p);		
-		return ticketRepo.save(newticket);
+		Project p= projectRepo.findById(projectId).get();
+		t.setTicketowner(u);
+		t.setProject(p);		
+		return ticketRepo.save(t);
 	}
 	
 	// update

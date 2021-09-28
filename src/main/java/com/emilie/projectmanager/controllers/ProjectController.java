@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.emilie.projectmanager.models.Project;
@@ -58,14 +60,12 @@ public class ProjectController {
 	
 	//****** create new project ******
 	@GetMapping("/projects/new")
-	public String projectNew(HttpSession session, Model model) {
+	public String projectNew(HttpSession session, Model model, @ModelAttribute("newproject") Project newproject) {
 		Long userId = (Long)session.getAttribute("user_id");
 		if(userId == null ) {
 			return "redirect:/";
 		}
 		String todaydate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(new Date());
-		Project newproject = new Project();
-		model.addAttribute("newproject", newproject);
 		model.addAttribute("todaydate", todaydate);
 		return "newproject.jsp";
 	}
@@ -148,8 +148,8 @@ public class ProjectController {
 	
 	//****** add a ticket ******
 	//****** only the team leader and team members can add a task ticket ***/
-	@GetMapping("/projects/{id}/tasks")
-	public String projectTickets(Model model, HttpSession session, @PathVariable("id") Long projectId) {
+	@RequestMapping("/projects/{id}/tasks")
+	public String projectTickets(Model model, HttpSession session, @PathVariable("id") Long projectId, @ModelAttribute("newticket") Ticket t) {
 		Long userId = (Long)session.getAttribute("user_id");
 		if(userId == null ) {
 			return "redirect:/";
@@ -157,15 +157,17 @@ public class ProjectController {
 		User user = userServ.findUserById(userId);
 		Project projectDetail = projectServ.findOneProjectById(projectId);
 		List<Ticket> tickets = ticketServ.findprojectticket(projectId);
-		Ticket newticket = new Ticket();
-		model.addAttribute("newticket", newticket);
+
+		t.setId(null);
+		System.out.println(t.getId());
 		model.addAttribute("projectDetail", projectDetail);
 		model.addAttribute("user", user);
 		model.addAttribute("tickets", tickets);
 		return "newticket.jsp";
 	}
-	@PostMapping("/projects/{id}/tasks/new")
+	@RequestMapping(value="/projects/{id}/tasks/new", method=RequestMethod.POST)
 	public String newTicket(@Valid @ModelAttribute("newticket") Ticket newticket, BindingResult result, HttpSession session, @PathVariable("id") Long projectId) {
+		//newticket.setId(null);
 		System.out.println(newticket.getId());
 		Long userId = (Long)session.getAttribute("user_id");
 		if(userId == null ) {
