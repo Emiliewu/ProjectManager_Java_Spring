@@ -107,7 +107,7 @@ public class ProjectController {
 		model.addAttribute("todaydate", todaydate);
 		return "editproject.jsp";
 	}
-	@PutMapping("/projects/update/{id}")
+	@PutMapping("/projects/update/{projectid}")
 	public String updateProject(@Valid @ModelAttribute("editproject") Project editproject, BindingResult result, HttpSession session, RedirectAttributes redirAttrs) {
 		Long userId = (Long)session.getAttribute("user_id");
 		if(userId == null ) {
@@ -148,8 +148,8 @@ public class ProjectController {
 	
 	//****** add a ticket ******
 	//****** only the team leader and team members can add a task ticket ***/
-	@RequestMapping("/projects/{id}/tasks")
-	public String projectTickets(Model model, HttpSession session, @PathVariable("id") Long projectId, @ModelAttribute("newticket") Ticket t) {
+	@RequestMapping("/projects/{projectid}/tasks")
+	public String projectTickets(Model model, HttpSession session, @PathVariable("projectid") Long projectId, @ModelAttribute("newticket") Ticket t) {
 		Long userId = (Long)session.getAttribute("user_id");
 		if(userId == null ) {
 			return "redirect:/";
@@ -157,8 +157,8 @@ public class ProjectController {
 		User user = userServ.findUserById(userId);
 		Project projectDetail = projectServ.findOneProjectById(projectId);
 		List<Ticket> tickets = ticketServ.findprojectticket(projectId);
-
-		t.setId(null);
+		//somehow STS will take id for ModelAttribute, so in the path, just name that id something else, otherwise, it is necessary to reset the id
+		//t.setId(null);
 		System.out.println(t.getId());
 		model.addAttribute("projectDetail", projectDetail);
 		model.addAttribute("user", user);
@@ -167,7 +167,6 @@ public class ProjectController {
 	}
 	@RequestMapping(value="/projects/{id}/tasks/new", method=RequestMethod.POST)
 	public String newTicket(@Valid @ModelAttribute("newticket") Ticket newticket, BindingResult result, HttpSession session, @PathVariable("id") Long projectId) {
-		//newticket.setId(null);
 		System.out.println(newticket.getId());
 		Long userId = (Long)session.getAttribute("user_id");
 		if(userId == null ) {

@@ -40,7 +40,7 @@
 			</div>
 			<div class="container-sm my-3">
 				<c:forEach items="${ tickets }" var="t">
-				<p style="color:#195f9b">Added by <c:out value="${ t.ticketowner.firstname }" /> at <fmt:formatDate pattern="hh:mma MM dd" value="${ t.getCreatedAt()}"/></p>
+				<p style="color:#195f9b">Added by <c:out value="${ t.ticketowner.firstname }" /> at <fmt:formatDate pattern="hh:mma MMMdd" value="${ t.getCreatedAt()}"/></p>
 				<p class="d-flex justify-content-between"><c:out value="${ t.tickettask }" /> <span><a href="/projects/${ projectDetail.id }/tasks/${ t.id }/delete" class="btn btn-sm btn-primary">Delete</a></span></p>
 				</c:forEach>
 			</div>
