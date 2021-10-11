@@ -35,13 +35,13 @@ import com.emilie.projectmanager.services.UserService;
 public class ProjectController {
 	
 	@Autowired
-	UserService userServ;
+	private UserService userServ;
 	
 	@Autowired
-	ProjectService projectServ;
+	private ProjectService projectServ;
 	
 	@Autowired
-	TicketService ticketServ;
+	private TicketService ticketServ;
 	
 	//****** all projects ******
 	@GetMapping("/dashboard")
@@ -161,6 +161,7 @@ public class ProjectController {
 		//t.setId(null);
 		System.out.println(t.getId());
 		model.addAttribute("projectDetail", projectDetail);
+		model.addAttribute("userId", userId);
 		model.addAttribute("user", user);
 		model.addAttribute("tickets", tickets);
 		return "newticket.jsp";

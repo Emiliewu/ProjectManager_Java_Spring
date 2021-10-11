@@ -15,13 +15,13 @@ import com.emilie.projectmanager.repositories.UserRepository;
 @Service
 public class ProjectService {
 	@Autowired
-	UserRepository userRepo;
+	private UserRepository userRepo;
 	
 	@Autowired
-	ProjectRepository projectRepo;
+	private ProjectRepository projectRepo;
 	
 	@Autowired
-	TicketRepository ticketRepo;
+	private TicketRepository ticketRepo;
 	
 	// find all projects
 	public List<Project> findAllProject(){

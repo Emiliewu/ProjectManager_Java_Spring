@@ -120,6 +120,7 @@ public class User {
 	public void setConfirm(String confirm) {
 		this.confirm = confirm;
 	}
+	
 	public List<Project> getLeadprojects() {
 		return leadprojects;
 	}
@@ -132,7 +133,6 @@ public class User {
 	public void setJoinedprojects(List<Project> joinedprojects) {
 		this.joinedprojects = joinedprojects;
 	}
-
 	public List<Ticket> getTickets() {
 		return tickets;
 	}
