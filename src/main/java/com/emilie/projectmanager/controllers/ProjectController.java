@@ -108,7 +108,7 @@ public class ProjectController {
 		return "editproject.jsp";
 	}
 	@PutMapping("/projects/update/{projectid}")
-	public String updateProject(@Valid @ModelAttribute("editproject") Project editproject, BindingResult result, HttpSession session, RedirectAttributes redirAttrs) {
+	public String updateProject(@PathVariable("projectid") Long projectid, @Valid @ModelAttribute("editproject") Project editproject, BindingResult result, HttpSession session, RedirectAttributes redirAttrs) {
 		Long userId = (Long)session.getAttribute("user_id");
 		if(userId == null ) {
 			return "redirect:/";
@@ -125,7 +125,7 @@ public class ProjectController {
 		    if(d.before(nowdate)) {
 		    	 System.out.println("The due date must be after today");
 		    	 redirAttrs.addFlashAttribute("duedateerror", "The due date must be after today");
-		    	 return "redirect:/projects/new";
+		    	 return "redirect:/projects/edit" + projectid;
 		    }
 		projectServ.updateProject(editproject);
 		return "redirect:/dashboard";
