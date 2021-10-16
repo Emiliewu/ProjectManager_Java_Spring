@@ -36,7 +36,7 @@
 				<tr>
 					<td scope="row"><a href="/projects/${ p.id }"><c:out value="${ p.title }"/></a></td>
 					<td scope="row"><c:out value="${ p.description }"/></td>
-					<td scope="row"><c:out value="${ p.duedate }"/></td>
+					<td scope="row"><<fmt:formatDate type="date" value="${ p.duedate }"/></td>
 					<td scope="row"><a href="/projects/${ p.id }/join">Join</a></td>
 				</tr>
 				</c:if>

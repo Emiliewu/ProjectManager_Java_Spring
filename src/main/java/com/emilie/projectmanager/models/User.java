@@ -18,6 +18,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -30,25 +31,25 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NotEmpty(message="First name is required!")
+    @NotBlank(message="First name is required!")
     @Size(min=2, max=30, message="First name must be between 2 and 30 characters")
     private String firstname;
     
-    @NotEmpty(message="Last name is required!")
+    @NotBlank(message="Last name is required!")
     @Size(min=2, max=30, message="last name must be between 2 and 30 characters")
     private String lastname;
     
     @Column(unique = true)
-    @NotEmpty(message="Email is required!")
-    @Email(message="Please enter a valid email!")
+    @NotBlank(message="Email is required!")
+    @Email(regexp="^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+.[a-zA-Z0-9.-]+$", message="Email must be valid")
     private String email;
     
-    @NotEmpty(message="Password is required!")
+    @NotBlank(message="Password is required!")
     @Size(min=8, max=128, message="Password must be between 8 and 128 characters")
     private String password;
     
     @Transient
-    @NotEmpty(message="Confirm Password is required!")
+    @NotBlank(message="Confirm Password is required!")
     @Size(min=8, max=128, message="Confirm Password must be between 8 and 128 characters")
     private String confirm;
     

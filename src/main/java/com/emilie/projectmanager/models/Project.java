@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -30,11 +31,11 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
-	@NotEmpty(message="Project title is required!")
+	@NotBlank(message="Project title is required!")
     @Size(min=2, max=50, message="Project title must be between 2 and 50 characters")
     private String title;
 	
-	@NotEmpty(message="Project description is required!")
+	@NotBlank(message="Project description is required!")
     @Size(min=5, max=200, message="Project description must be between 5 and 200 characters")
 	private String description;
 	
